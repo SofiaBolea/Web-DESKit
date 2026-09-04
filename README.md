@@ -1,4 +1,4 @@
-# Web-DESKit 🚀
+# Web-DESKit 
 
 Plataforma web interactiva para la comprensión, documentación y simulación de la arquitectura de **DESKit** (Simulador de Eventos Discretos en Java).
 
@@ -37,7 +37,7 @@ npm run dev
 ### 4. Abrir la plataforma en el navegador
 Una vez iniciado, abre tu navegador web e ingresa a:
 
-👉 **[http://localhost:3000](http://localhost:3000)**
+ **[http://localhost:3000](http://localhost:3000)**
 
 ---
 
