@@ -14,7 +14,7 @@ export function FlowComparisonSection() {
         <div className="flex flex-col items-center justify-center border-2 border-dashed border-slate-600 rounded-xl bg-slate-800/50 p-4 md:p-8">
           <figure className="flex flex-col items-center">
             <ZoomableImage
-              src="/DiagramaDeFlujoTeórico.png"
+              src="/DiagramaDeFlujoTeorico.png"
               alt="Flujo Teórico Simulador DES"
               className="rounded-lg shadow-lg max-h-[500px] w-auto object-contain"
             />
