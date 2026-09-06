@@ -24,6 +24,7 @@ export function ZoomableImage({
   const [isDragging, setIsDragging] = useState(false);
   const dragStartRef = useRef({ x: 0, y: 0 });
   const touchStartDistRef = useRef<number | null>(null);
+  const viewportRef = useRef<HTMLDivElement | null>(null);
 
   const openModal = () => {
     setScale(1);
@@ -54,19 +55,7 @@ export function ZoomableImage({
     setPosition({ x: 0, y: 0 });
   };
 
-  // Manejo de la rueda del ratón (Wheel) con respuesta ágil
-  const handleWheel = (e: React.WheelEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    const delta = e.deltaY < 0 ? 0.25 : -0.25;
-    setScale((prev) => {
-      const newScale = Math.min(4, Math.max(1, +(prev + delta).toFixed(2)));
-      if (newScale === 1) setPosition({ x: 0, y: 0 });
-      return newScale;
-    });
-  };
-
-  // Manejo de arrastre (Pan) con ratón
+  // Manejo de arrastre (Pan) con mouse
   const handleMouseDown = (e: React.MouseEvent) => {
     if (scale <= 1) return;
     setIsDragging(true);
@@ -127,6 +116,28 @@ export function ZoomableImage({
     touchStartDistRef.current = null;
     setIsDragging(false);
   };
+
+  // Manejo de la rueda del mouse (Wheel) con listener no pasivo para permitir preventDefault()
+  useEffect(() => {
+    const viewport = viewportRef.current;
+    if (!isOpen || !viewport) return;
+
+    const onWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const delta = e.deltaY < 0 ? 0.25 : -0.25;
+      setScale((prev) => {
+        const newScale = Math.min(4, Math.max(1, +(prev + delta).toFixed(2)));
+        if (newScale === 1) setPosition({ x: 0, y: 0 });
+        return newScale;
+      });
+    };
+
+    viewport.addEventListener("wheel", onWheel, { passive: false });
+    return () => {
+      viewport.removeEventListener("wheel", onWheel);
+    };
+  }, [isOpen]);
 
   // Cerrar modal con tecla Escape
   useEffect(() => {
@@ -240,8 +251,8 @@ export function ZoomableImage({
 
           {/* Viewport de la imagen: Contenedor con overflow controlado */}
           <div
-            className="relative w-full h-full max-w-6xl max-h-[85vh] flex items-center justify-center overflow-hidden"
-            onWheel={handleWheel}
+            ref={viewportRef}
+            className="relative w-full h-full max-w-6xl max-h-[85vh] flex items-center justify-center overflow-hidden touch-none"
             onMouseDown={handleMouseDown}
             onMouseMove={handleMouseMove}
             onMouseUp={handleMouseUp}
@@ -274,7 +285,7 @@ export function ZoomableImage({
 
           {/* Barra inferior informativa */}
           <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-xs text-slate-400 font-mono bg-slate-950/80 backdrop-blur-md px-4 py-1.5 rounded-full border border-slate-800 text-center pointer-events-none hidden sm:block">
-            {alt} • Rueda del ratón o barra lateral para zoom • {scale > 1 ? "Arrastra para mover" : "Doble clic para 200%"}
+            {alt} • Rueda del mouse o barra lateral para zoom • {scale > 1 ? "Arrastra para mover" : "Doble clic para 200%"}
           </div>
         </div>
       )}
