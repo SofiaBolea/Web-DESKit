@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { FlipCard } from "../ui/FlipCard";
 import { ZoomableImage } from "../ui/ZoomableImage";
-import { Box, Cog, Component, Database, Terminal, PlaySquare, Timer, BarChart, FileText, Settings } from "lucide-react";
+import { Box, Cog, Component, Database, Terminal, PlaySquare, Timer, BarChart, FileText, Settings, Layers } from "lucide-react";
 
 const CardDescriptionWithMethods = ({ mainText, methodsText }: { mainText: React.ReactNode, methodsText: React.ReactNode }) => {
   const [showMethods, setShowMethods] = useState(false);
@@ -92,20 +92,51 @@ const allClasses = [
   {
     id: "estado",
     title: "EstadoDelSistema",
-    category: "motor",
+    category: "abstracta",
     icon: <Database size={32} />,
     desc: (
       <CardDescriptionWithMethods
         mainText={
           <div className="space-y-2">
-            <p>Representa exactamente la colección de variables de estado necesarias para describir el sistema en un momento particular.</p>
-            <p>Esta clase abstracta sirve como molde conceptual para tomar una "foto" del modelo en cualquier instante, agrupando los atributos clave que rigen la lógica (como el estado libre u ocupado de un servidor, o la cantidad de entidades esperando en una cola).</p>
-            <p>Al ser abstracta, obliga a crear una clase específica (como <code>Ejercicio1.java</code>) que defina las variables exactas del problema a simular.</p>
+            <p><strong>Colección de Variables y Entidades:</strong> Representa la colección de variables de estado necesarias para describir el sistema en un momento particular a partir de un conjunto de entidades.</p>
+            <p>Esta clase abstracta actúa como <em>Extension Point</em> (<code>&lt;modelo&gt;</code>) y molde conceptual para tomar una &quot;foto&quot; del modelo en cualquier instante, manteniendo y gestionando la lista de entidades activas en la simulación.</p>
+            <p>Al ser abstracta, obliga a crear una clase específica (como <code>Ejercicio1.java</code>) que defina las variables exactas del problema e implemente el método <code>inicializar()</code>.</p>
           </div>
         }
         methodsText={
           <ul className="space-y-2 list-disc pl-4 marker:text-indigo-300">
-            <li><strong className="text-indigo-200">inicializar() (Abstracto):</strong> Obliga a cualquier clase hija a programar cómo deben arrancar sus variables de estado al comienzo de la simulación (para t=0). Esto garantiza que el modelo parta siempre con las condiciones iniciales correctas.</li>
+            <li><strong className="text-indigo-200">EstadoDelSistema():</strong> Constructor por defecto. Inicializa internamente la lista de entidades (<code>this.entidades = new ArrayList&lt;&gt;()</code>).</li>
+            <li><strong className="text-indigo-200">inicializar() (Abstracto):</strong> Configura el estado inicial del modelo al inicio de la simulación (fase de inicialización). Obliga a definir las condiciones iniciales del sistema.</li>
+            <li><strong className="text-indigo-200">agregarEntidad(Entity entidad):</strong> Registra y agrega una entidad al conjunto de entidades del estado del sistema.</li>
+            <li><strong className="text-indigo-200">removerEntidad(Entity entidad):</strong> Elimina una entidad del conjunto de entidades del estado del sistema.</li>
+            <li><strong className="text-indigo-200">getEntidades():</strong> Recupera la lista de entidades (<code>List&lt;Entity&gt;</code>) registradas actualmente en el modelo.</li>
+          </ul>
+        }
+      />
+    )
+  },
+  {
+    id: "entidad",
+    title: "Entity",
+    category: "abstracta",
+    icon: <Layers size={32} />,
+    desc: (
+      <CardDescriptionWithMethods
+        mainText={
+          <div className="space-y-2">
+            <p>Representa un objeto, elemento o actor individual que interactúa con el sistema y transita a través de diferentes fases durante la simulación.</p>
+            <p>Actúa como clase base abstracta y <em>Extension Point</em> para modelar elementos discretos que poseen identidad propia (<code>id</code>) y evolucionan a lo largo de un ciclo de vida (<code>lifecyclePhase</code>).</p>
+
+          </div>
+        }
+        methodsText={
+          <ul className="space-y-2 list-disc pl-4 marker:text-indigo-300">
+            <li><strong className="text-indigo-200">Entity(String id):</strong> Constructor. Instancia una entidad asignándole su identificador único.</li>
+            <li><strong className="text-indigo-200">Entity(String id, String lifecyclePhase):</strong> Constructor. Instancia la entidad asignándole su identificador único y su estado o fase inicial en el ciclo de vida.</li>
+            <li><strong className="text-indigo-200">getId():</strong> Recupera la identificación única de la entidad (<code>String</code>).</li>
+            <li><strong className="text-indigo-200">getLifecyclePhase():</strong> Conoce la fase o estado actual del ciclo de vida en el que se encuentra la entidad.</li>
+            <li><strong className="text-indigo-200">setLifecyclePhase(String lifecyclePhase):</strong> Actualiza la fase del ciclo de vida para reflejar el avance o transición de estado de la entidad.</li>
+            <li><strong className="text-indigo-200">showState() (Abstracto):</strong> Obliga a cada subclase concreta a definir cómo reportar o imprimir su estado interno y atributos relevantes en un momento determinado.</li>
           </ul>
         }
       />
@@ -327,20 +358,23 @@ export function ClassesGridSection() {
       <div className="mb-8 sm:mb-12 text-center">
         <h2 className="text-3xl md:text-5xl font-bold text-white mb-4 sm:mb-6">Arquitectura de Clases</h2>
         <p className="text-slate-400 max-w-2xl mx-auto mb-6 sm:mb-8 text-base sm:text-lg leading-relaxed">
-          Componentes centrales del simulador. Podes hacer clic o pasa el mouse sobre las tarjetas para ver sus responsabilidades. Estas clases bases son aquellas que no deben tocarse para que el simulador funcione. Las clases abstractas son las que deben extenderse para correr un modelo en particular.
+          Componentes centrales del simulador. Podes hacer clic o pasar el mouse sobre las tarjetas para ver sus responsabilidades. Las clases abstractas son las que deben extenderse para correr un modelo en particular.
         </p>
 
         <div className="flex justify-center flex-wrap gap-3 sm:gap-4 mb-8 sm:mb-10">
-          {["todas", "abstracta"].map(f => (
+          {[
+            { id: "todas", label: "Todas" },
+            { id: "abstracta", label: "Clases Abstractas" },
+          ].map(f => (
             <button
-              key={f}
-              onClick={() => setFilter(f)}
-              className={`px-6 sm:px-8 py-2.5 sm:py-3 rounded-full border transition-all font-semibold capitalize text-sm sm:text-base cursor-pointer ${filter === f
+              key={f.id}
+              onClick={() => setFilter(f.id)}
+              className={`px-6 sm:px-8 py-2.5 sm:py-3 rounded-full border transition-all font-semibold text-sm sm:text-base cursor-pointer ${filter === f.id
                 ? "bg-indigo-600 border-indigo-500 text-white shadow-lg shadow-indigo-500/25"
                 : "bg-slate-900/50 border-slate-700 text-slate-400 hover:border-slate-500 hover:text-slate-200"
                 }`}
             >
-              {f === "todas" ? "Todas" : "Clases Abstractas"}
+              {f.label}
             </button>
           ))}
         </div>

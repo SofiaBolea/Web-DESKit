@@ -141,44 +141,9 @@ export const getExamplesData = (scrollTo: (id: string) => void) => ({
             <div className="p-4 flex gap-4 overflow-hidden leading-relaxed">
               {/* Line Numbers */}
               <div className="text-slate-600 select-none text-right flex flex-col">
-                <span>1</span>
-                <span>2</span>
-                <span>3</span>
-                <span>4</span>
-                <span>5</span>
-                <span>6</span>
-                <span>7</span>
-                <span>8</span>
-                <span>9</span>
-                <span>10</span>
-                <span>11</span>
-                <span>12</span>
-                <span>13</span>
-                <span>14</span>
-                <span>15</span>
-                <span>16</span>
-                <span>17</span>
-                <span>18</span>
-                <span>19</span>
-                <span>20</span>
-                <span>21</span>
-                <span>22</span>
-                <span>23</span>
-                <span>24</span>
-                <span>25</span>
-                <span>26</span>
-                <span>27</span>
-                <span>28</span>
-                <span>29</span>
-                <span>30</span>
-                <span>31</span>
-                <span>32</span>
-                <span>33</span>
-                <span>34</span>
-                <span>35</span>
-                <span>36</span>
-                <span>37</span>
-                <span>38</span>
+                {Array.from({ length: 68 }, (_, i) => (
+                  <span key={i + 1}>{i + 1}</span>
+                ))}
               </div>
 
               {/* Java Syntax Content */}
@@ -187,6 +152,9 @@ export const getExamplesData = (scrollTo: (id: string) => void) => ({
                   <span className="text-[#569cd6]">package</span> ejercicio1.estadoDelSistema;
                 </div>
                 <div>{" "}</div>
+                <div>
+                  <span className="text-[#569cd6]">import</span> des.<span className="text-[#4ec9b0]">Entity</span>;
+                </div>
                 <div>
                   <span className="text-[#569cd6]">import</span> des.<span className="text-[#4ec9b0]">EstadoDelSistema</span>;
                 </div>
@@ -203,6 +171,17 @@ export const getExamplesData = (scrollTo: (id: string) => void) => ({
                 </div>
                 <div>{" "}</div>
                 <div className="pl-4">
+                  <span className="text-[#569cd6]">public</span> <span className="text-[#4ec9b0]">Ejercicio1</span>() {"{"}
+                </div>
+                <div className="pl-8">
+                  <span className="text-[#569cd6]">super</span>();
+                </div>
+                <div className="pl-4">{"}"}</div>
+                <div>{" "}</div>
+                <div className="pl-4">
+                  <span className="text-[#569cd6]">@Override</span>
+                </div>
+                <div className="pl-4">
                   <span className="text-[#569cd6]">public void</span> inicializar() {"{"}
                 </div>
                 <div className="pl-8">
@@ -211,42 +190,108 @@ export const getExamplesData = (scrollTo: (id: string) => void) => ({
                 <div className="pl-8">
                   servidor = <span className="text-[#569cd6]">new</span> <span className="text-[#4ec9b0]">Servidor</span>(<span className="text-[#569cd6]">false</span>);
                 </div>
+                <div className="pl-8">
+                  agregarEntidad(servidor);
+                </div>
+                <div className="pl-8">
+                  agregarEntidad(cola);
+                </div>
                 <div className="pl-4">{"}"}</div>
                 <div>{" "}</div>
                 <div className="pl-4">
                   <span className="text-[#569cd6]">public boolean</span> estaServidorOcupado() {"{"}
                 </div>
-                <div className="pl-8 text-slate-500">// ...</div>
+                <div className="pl-8">
+                  <span className="text-[#569cd6]">return</span> servidor.getEstaOcupado();
+                </div>
                 <div className="pl-4">{"}"}</div>
                 <div>{" "}</div>
                 <div className="pl-4">
                   <span className="text-[#569cd6]">public void</span> encolarSolicitud(<span className="text-[#4ec9b0]">Solicitud</span> solicitud) {"{"}
                 </div>
-                <div className="pl-8 text-slate-500">// ...</div>
+                <div className="pl-8">
+                  <span className="text-[#569cd6]">if</span> (!getEntidades().contains(solicitud)) {"{"}
+                </div>
+                <div className="pl-12">
+                  agregarEntidad(solicitud);
+                </div>
+                <div className="pl-8">{"}"}</div>
+                <div className="pl-8">
+                  solicitud.setLifecyclePhase(<span className="text-[#ce9178]">&quot;EN_COLA&quot;</span>);
+                </div>
+                <div className="pl-8">
+                  cola.encolarSolicitud(solicitud);
+                </div>
                 <div className="pl-4">{"}"}</div>
                 <div>{" "}</div>
                 <div className="pl-4">
                   <span className="text-[#569cd6]">public void</span> atenderSolicitud(<span className="text-[#4ec9b0]">Solicitud</span> solicitud) {"{"}
                 </div>
-                <div className="pl-8 text-slate-500">// ...</div>
+                <div className="pl-8">
+                  <span className="text-[#569cd6]">if</span> (!getEntidades().contains(solicitud)) {"{"}
+                </div>
+                <div className="pl-12">
+                  agregarEntidad(solicitud);
+                </div>
+                <div className="pl-8">{"}"}</div>
+                <div className="pl-8">
+                  cola.encolarSolicitud(solicitud);
+                </div>
+                <div className="pl-8">
+                  servidor.pasarAOcupado(cola.solicitudPrioritaria());
+                </div>
                 <div className="pl-4">{"}"}</div>
                 <div>{" "}</div>
                 <div className="pl-4">
                   <span className="text-[#569cd6]">public boolean</span> haySolicitudesEnEspera() {"{"}
                 </div>
-                <div className="pl-8 text-slate-500">// ...</div>
+                <div className="pl-8">
+                  <span className="text-[#569cd6]">return</span> cola.getCantSolicitudesEsperando() &gt; <span className="text-[#b5cea8]">0</span>;
+                </div>
                 <div className="pl-4">{"}"}</div>
                 <div>{" "}</div>
                 <div className="pl-4">
                   <span className="text-[#569cd6]">public</span> <span className="text-[#4ec9b0]">Solicitud</span> obtenerSolicitudPrioritaria() {"{"}
                 </div>
-                <div className="pl-8 text-slate-500">// ...</div>
+                <div className="pl-8">
+                  <span className="text-[#569cd6]">return</span> cola.solicitudPrioritaria();
+                </div>
                 <div className="pl-4">{"}"}</div>
                 <div>{" "}</div>
                 <div className="pl-4">
                   <span className="text-[#569cd6]">public void</span> actualizarServidorDisponible() {"{"}
                 </div>
-                <div className="pl-8 text-slate-500">// ...</div>
+                <div className="pl-8">
+                  servidor.pasarALibre();
+                </div>
+                <div className="pl-4">{"}"}</div>
+                <div>{" "}</div>
+                <div className="pl-4">
+                  <span className="text-[#569cd6]">public</span> <span className="text-[#4ec9b0]">Servidor</span> getServidor() {"{"}
+                </div>
+                <div className="pl-8">
+                  <span className="text-[#569cd6]">return this</span>.servidor;
+                </div>
+                <div className="pl-4">{"}"}</div>
+                <div>{" "}</div>
+                <div className="pl-4">
+                  <span className="text-[#569cd6]">public</span> <span className="text-[#4ec9b0]">ColaDeSolicitudes</span> getCola() {"{"}
+                </div>
+                <div className="pl-8">
+                  <span className="text-[#569cd6]">return this</span>.cola;
+                </div>
+                <div className="pl-4">{"}"}</div>
+                <div>{" "}</div>
+                <div className="pl-4">
+                  <span className="text-[#569cd6]">public void</span> mostrarEstadoEntidades() {"{"}
+                </div>
+                <div className="pl-8">
+                  <span className="text-[#569cd6]">for</span> (<span className="text-[#4ec9b0]">Entity</span> entidad : getEntidades()) {"{"}
+                </div>
+                <div className="pl-12">
+                  entidad.showState();
+                </div>
+                <div className="pl-8">{"}"}</div>
                 <div className="pl-4">{"}"}</div>
                 <div>{"}"}</div>
               </div>
@@ -283,36 +328,9 @@ export const getExamplesData = (scrollTo: (id: string) => void) => ({
             <div className="p-4 flex gap-4 overflow-hidden leading-relaxed">
               {/* Line Numbers */}
               <div className="text-slate-600 select-none text-right flex flex-col">
-                <span>1</span>
-                <span>2</span>
-                <span>3</span>
-                <span>4</span>
-                <span>5</span>
-                <span>6</span>
-                <span>7</span>
-                <span>8</span>
-                <span>9</span>
-                <span>10</span>
-                <span>11</span>
-                <span>12</span>
-                <span>13</span>
-                <span>14</span>
-                <span>15</span>
-                <span>16</span>
-                <span>17</span>
-                <span>18</span>
-                <span>19</span>
-                <span>20</span>
-                <span>21</span>
-                <span>22</span>
-                <span>23</span>
-                <span>24</span>
-                <span>25</span>
-                <span>26</span>
-                <span>27</span>
-                <span>28</span>
-                <span>29</span>
-                <span>30</span>
+                {Array.from({ length: 99 }, (_, i) => (
+                  <span key={i + 1}>{i + 1}</span>
+                ))}
               </div>
 
               {/* Java Syntax Content */}
@@ -329,7 +347,11 @@ export const getExamplesData = (scrollTo: (id: string) => void) => ({
                 </div>
                 <div>{" "}</div>
                 <div>
-                  <span className="text-[#569cd6]">public class</span> <span className="text-[#4ec9b0]">ColaDeSolicitudes</span> {"{"}
+                  <span className="text-[#569cd6]">import</span> des.<span className="text-[#4ec9b0]">Entity</span>;
+                </div>
+                <div>{" "}</div>
+                <div>
+                  <span className="text-[#569cd6]">public class</span> <span className="text-[#4ec9b0]">ColaDeSolicitudes</span> <span className="text-[#569cd6]">extends</span> <span className="text-[#4ec9b0]">Entity</span> {"{"}
                 </div>
                 <div className="pl-4">
                   <span className="text-[#569cd6]">private</span> <span className="text-[#4ec9b0]">Queue</span>&lt;<span className="text-[#4ec9b0]">Solicitud</span>&gt; colaClase1;
@@ -345,7 +367,26 @@ export const getExamplesData = (scrollTo: (id: string) => void) => ({
                 </div>
                 <div>{" "}</div>
                 <div className="pl-4">
+                  <span className="text-[#569cd6]">public</span> <span className="text-[#4ec9b0]">ColaDeSolicitudes</span>(<span className="text-[#4ec9b0]">String</span> id) {"{"}
+                </div>
+                <div className="pl-8">
+                  <span className="text-[#569cd6]">this</span>(id, <span className="text-[#ce9178]">&quot;VACIA&quot;</span>);
+                </div>
+                <div className="pl-4">{"}"}</div>
+                <div>{" "}</div>
+                <div className="pl-4">
                   <span className="text-[#569cd6]">public</span> <span className="text-[#4ec9b0]">ColaDeSolicitudes</span>() {"{"}
+                </div>
+                <div className="pl-8">
+                  <span className="text-[#569cd6]">this</span>(<span className="text-[#ce9178]">&quot;ColaDeSolicitudes&quot;</span>, <span className="text-[#ce9178]">&quot;VACIA&quot;</span>);
+                </div>
+                <div className="pl-4">{"}"}</div>
+                <div>{" "}</div>
+                <div className="pl-4">
+                  <span className="text-[#569cd6]">public</span> <span className="text-[#4ec9b0]">ColaDeSolicitudes</span>(<span className="text-[#4ec9b0]">String</span> id, <span className="text-[#4ec9b0]">String</span> lifecyclePhase) {"{"}
+                </div>
+                <div className="pl-8">
+                  <span className="text-[#569cd6]">super</span>(id, lifecyclePhase);
                 </div>
                 <div className="pl-8">
                   <span className="text-[#569cd6]">this</span>.colaClase1 = <span className="text-[#569cd6]">new</span> <span className="text-[#4ec9b0]">LinkedList</span>&lt;&gt;();
@@ -362,21 +403,173 @@ export const getExamplesData = (scrollTo: (id: string) => void) => ({
                 <div className="pl-4">{"}"}</div>
                 <div>{" "}</div>
                 <div className="pl-4">
+                  <span className="text-[#569cd6]">private void</span> actualizarFase() {"{"}
+                </div>
+                <div className="pl-8">
+                  setLifecyclePhase(getCantSolicitudesEsperando() &gt; <span className="text-[#b5cea8]">0</span> ? <span className="text-[#ce9178]">&quot;CON_SOLICITUDES&quot;</span> : <span className="text-[#ce9178]">&quot;VACIA&quot;</span>);
+                </div>
+                <div className="pl-4">{"}"}</div>
+                <div>{" "}</div>
+                <div className="pl-4">
                   <span className="text-[#569cd6]">public void</span> encolarSolicitud(<span className="text-[#4ec9b0]">Solicitud</span> solicitudParaAgregar) {"{"}
                 </div>
-                <div className="pl-8 text-slate-500">// ...</div>
+                <div className="pl-8">
+                  <span className="text-[#569cd6]">switch</span> (solicitudParaAgregar.getClase()) {"{"}
+                </div>
+                <div className="pl-12">
+                  <span className="text-[#569cd6]">case</span> <span className="text-[#b5cea8]">1</span>:
+                </div>
+                <div className="pl-16">
+                  <span className="text-[#569cd6]">this</span>.colaClase1.add(solicitudParaAgregar);
+                </div>
+                <div className="pl-16">
+                  <span className="text-[#569cd6]">break</span>;
+                </div>
+                <div className="pl-12">
+                  <span className="text-[#569cd6]">case</span> <span className="text-[#b5cea8]">2</span>:
+                </div>
+                <div className="pl-16">
+                  <span className="text-[#569cd6]">this</span>.colaClase2.add(solicitudParaAgregar);
+                </div>
+                <div className="pl-16">
+                  <span className="text-[#569cd6]">break</span>;
+                </div>
+                <div className="pl-12">
+                  <span className="text-[#569cd6]">case</span> <span className="text-[#b5cea8]">3</span>:
+                </div>
+                <div className="pl-16">
+                  <span className="text-[#569cd6]">this</span>.colaClase3.add(solicitudParaAgregar);
+                </div>
+                <div className="pl-16">
+                  <span className="text-[#569cd6]">break</span>;
+                </div>
+                <div className="pl-12">
+                  <span className="text-[#569cd6]">case</span> <span className="text-[#b5cea8]">4</span>:
+                </div>
+                <div className="pl-16">
+                  <span className="text-[#569cd6]">this</span>.colaClase4.add(solicitudParaAgregar);
+                </div>
+                <div className="pl-16">
+                  <span className="text-[#569cd6]">break</span>;
+                </div>
+                <div className="pl-12">
+                  <span className="text-[#569cd6]">default</span>:
+                </div>
+                <div className="pl-16">
+                  <span className="text-[#569cd6]">break</span>;
+                </div>
+                <div className="pl-8">{"}"}</div>
+                <div className="pl-8">
+                  actualizarFase();
+                </div>
                 <div className="pl-4">{"}"}</div>
                 <div>{" "}</div>
                 <div className="pl-4">
                   <span className="text-[#569cd6]">public int</span> getCantSolicitudesEsperando() {"{"}
                 </div>
-                <div className="pl-8 text-slate-500">// ...</div>
+                <div className="pl-8">
+                  <span className="text-[#569cd6]">return</span> colaClase1.size() + colaClase2.size() + colaClase3.size() + colaClase4.size();
+                </div>
                 <div className="pl-4">{"}"}</div>
                 <div>{" "}</div>
                 <div className="pl-4">
                   <span className="text-[#569cd6]">public</span> <span className="text-[#4ec9b0]">Solicitud</span> solicitudPrioritaria() {"{"}
                 </div>
-                <div className="pl-8 text-slate-500">// ...</div>
+                <div className="pl-8">
+                  <span className="text-[#4ec9b0]">Solicitud</span> prioritaria = <span className="text-[#569cd6]">null</span>;
+                </div>
+                <div className="pl-8">
+                  <span className="text-[#569cd6]">if</span> (!colaClase4.isEmpty()) {"{"}
+                </div>
+                <div className="pl-12">
+                  prioritaria = colaClase4.poll();
+                </div>
+                <div className="pl-8">
+                  {"}"} <span className="text-[#569cd6]">else if</span> (!colaClase3.isEmpty()) {"{"}
+                </div>
+                <div className="pl-12">
+                  prioritaria = colaClase3.poll();
+                </div>
+                <div className="pl-8">
+                  {"}"} <span className="text-[#569cd6]">else if</span> (!colaClase2.isEmpty()) {"{"}
+                </div>
+                <div className="pl-12">
+                  prioritaria = colaClase2.poll();
+                </div>
+                <div className="pl-8">
+                  {"}"} <span className="text-[#569cd6]">else if</span> (!colaClase1.isEmpty()) {"{"}
+                </div>
+                <div className="pl-12">
+                  prioritaria = colaClase1.poll();
+                </div>
+                <div className="pl-8">{"}"}</div>
+                <div className="pl-8">
+                  actualizarFase();
+                </div>
+                <div className="pl-8">
+                  <span className="text-[#569cd6]">return</span> prioritaria;
+                </div>
+                <div className="pl-4">{"}"}</div>
+                <div>{" "}</div>
+                <div className="pl-4">
+                  <span className="text-[#569cd6]">public</span> <span className="text-[#4ec9b0]">Queue</span>&lt;<span className="text-[#4ec9b0]">Solicitud</span>&gt; getColaClase1() {"{"}
+                </div>
+                <div className="pl-8">
+                  <span className="text-[#569cd6]">return this</span>.colaClase1;
+                </div>
+                <div className="pl-4">{"}"}</div>
+                <div>{" "}</div>
+                <div className="pl-4">
+                  <span className="text-[#569cd6]">public</span> <span className="text-[#4ec9b0]">Queue</span>&lt;<span className="text-[#4ec9b0]">Solicitud</span>&gt; getColaClase2() {"{"}
+                </div>
+                <div className="pl-8">
+                  <span className="text-[#569cd6]">return this</span>.colaClase2;
+                </div>
+                <div className="pl-4">{"}"}</div>
+                <div>{" "}</div>
+                <div className="pl-4">
+                  <span className="text-[#569cd6]">public</span> <span className="text-[#4ec9b0]">Queue</span>&lt;<span className="text-[#4ec9b0]">Solicitud</span>&gt; getColaClase3() {"{"}
+                </div>
+                <div className="pl-8">
+                  <span className="text-[#569cd6]">return this</span>.colaClase3;
+                </div>
+                <div className="pl-4">{"}"}</div>
+                <div>{" "}</div>
+                <div className="pl-4">
+                  <span className="text-[#569cd6]">public</span> <span className="text-[#4ec9b0]">Queue</span>&lt;<span className="text-[#4ec9b0]">Solicitud</span>&gt; getColaClase4() {"{"}
+                </div>
+                <div className="pl-8">
+                  <span className="text-[#569cd6]">return this</span>.colaClase4;
+                </div>
+                <div className="pl-4">{"}"}</div>
+                <div>{" "}</div>
+                <div className="pl-4">
+                  <span className="text-[#569cd6]">@Override</span>
+                </div>
+                <div className="pl-4">
+                  <span className="text-[#569cd6]">public void</span> showState() {"{"}
+                </div>
+                <div className="pl-8">
+                  <span className="text-[#4ec9b0]">System</span>.out.println(<span className="text-[#ce9178]">&quot;Cola ID: &quot;</span> + getId()
+                </div>
+                <div className="pl-16">
+                  + <span className="text-[#ce9178]">&quot; | Fase: &quot;</span> + getLifecyclePhase()
+                </div>
+                <div className="pl-16">
+                  + <span className="text-[#ce9178]">&quot; | Solicitudes en espera: &quot;</span> + getCantSolicitudesEsperando()
+                </div>
+                <div className="pl-16">
+                  + <span className="text-[#ce9178]">&quot; (Clase 4: &quot;</span> + colaClase4.size()
+                </div>
+                <div className="pl-16">
+                  + <span className="text-[#ce9178]">&quot;, Clase 3: &quot;</span> + colaClase3.size()
+                </div>
+                <div className="pl-16">
+                  + <span className="text-[#ce9178]">&quot;, Clase 2: &quot;</span> + colaClase2.size()
+                </div>
+                <div className="pl-16">
+                  + <span className="text-[#ce9178]">&quot;, Clase 1: &quot;</span> + colaClase1.size() + <span className="text-[#ce9178]">&quot;)&quot;</span>);
+                </div>
                 <div className="pl-4">{"}"}</div>
                 <div>{"}"}</div>
               </div>
@@ -414,32 +607,9 @@ export const getExamplesData = (scrollTo: (id: string) => void) => ({
             <div className="p-4 flex gap-4 overflow-hidden leading-relaxed">
               {/* Line Numbers */}
               <div className="text-slate-600 select-none text-right flex flex-col">
-                <span>1</span>
-                <span>2</span>
-                <span>3</span>
-                <span>4</span>
-                <span>5</span>
-                <span>6</span>
-                <span>7</span>
-                <span>8</span>
-                <span>9</span>
-                <span>10</span>
-                <span>11</span>
-                <span>12</span>
-                <span>13</span>
-                <span>14</span>
-                <span>15</span>
-                <span>16</span>
-                <span>17</span>
-                <span>18</span>
-                <span>19</span>
-                <span>20</span>
-                <span>21</span>
-                <span>22</span>
-                <span>23</span>
-                <span>24</span>
-                <span>25</span>
-                <span>26</span>
+                {Array.from({ length: 57 }, (_, i) => (
+                  <span key={i + 1}>{i + 1}</span>
+                ))}
               </div>
 
               {/* Java Syntax Content */}
@@ -449,7 +619,11 @@ export const getExamplesData = (scrollTo: (id: string) => void) => ({
                 </div>
                 <div>{" "}</div>
                 <div>
-                  <span className="text-[#569cd6]">public class</span> <span className="text-[#4ec9b0]">Servidor</span> {"{"}
+                  <span className="text-[#569cd6]">import</span> des.<span className="text-[#4ec9b0]">Entity</span>;
+                </div>
+                <div>{" "}</div>
+                <div>
+                  <span className="text-[#569cd6]">public class</span> <span className="text-[#4ec9b0]">Servidor</span> <span className="text-[#569cd6]">extends</span> <span className="text-[#4ec9b0]">Entity</span> {"{"}
                 </div>
                 <div>{" "}</div>
                 <div className="pl-4">
@@ -460,33 +634,111 @@ export const getExamplesData = (scrollTo: (id: string) => void) => ({
                 </div>
                 <div>{" "}</div>
                 <div className="pl-4">
+                  <span className="text-[#569cd6]">public</span> <span className="text-[#4ec9b0]">Servidor</span>(<span className="text-[#4ec9b0]">String</span> id, <span className="text-[#569cd6]">boolean</span> estado) {"{"}
+                </div>
+                <div className="pl-8">
+                  <span className="text-[#569cd6]">super</span>(id, estado ? <span className="text-[#ce9178]">&quot;OCUPADO&quot;</span> : <span className="text-[#ce9178]">&quot;LIBRE&quot;</span>);
+                </div>
+                <div className="pl-8">
+                  <span className="text-[#569cd6]">this</span>.estaOcupado = estado;
+                </div>
+                <div className="pl-4">{"}"}</div>
+                <div>{" "}</div>
+                <div className="pl-4">
                   <span className="text-[#569cd6]">public</span> <span className="text-[#4ec9b0]">Servidor</span>(<span className="text-[#569cd6]">boolean</span> estado) {"{"}
                 </div>
-                <div className="pl-8 text-slate-500">// ...</div>
+                <div className="pl-8">
+                  <span className="text-[#569cd6]">this</span>(<span className="text-[#ce9178]">&quot;Servidor&quot;</span>, estado);
+                </div>
                 <div className="pl-4">{"}"}</div>
                 <div>{" "}</div>
                 <div className="pl-4">
                   <span className="text-[#569cd6]">public boolean</span> getEstaOcupado() {"{"}
                 </div>
-                <div className="pl-8 text-slate-500">// ...</div>
+                <div className="pl-8">
+                  <span className="text-[#569cd6]">return this</span>.estaOcupado;
+                </div>
                 <div className="pl-4">{"}"}</div>
                 <div>{" "}</div>
                 <div className="pl-4">
                   <span className="text-[#569cd6]">public void</span> pasarAOcupado(<span className="text-[#4ec9b0]">Solicitud</span> solicitud) {"{"}
                 </div>
-                <div className="pl-8 text-slate-500">// ...</div>
+                <div className="pl-8">
+                  <span className="text-[#569cd6]">this</span>.estaOcupado = <span className="text-[#569cd6]">true</span>;
+                </div>
+                <div className="pl-8">
+                  <span className="text-[#569cd6]">this</span>.solicitudEnProcesamiento = solicitud;
+                </div>
+                <div className="pl-8">
+                  <span className="text-[#569cd6]">if</span> (solicitud != <span className="text-[#569cd6]">null</span>) {"{"}
+                </div>
+                <div className="pl-12">
+                  solicitud.setLifecyclePhase(<span className="text-[#ce9178]">&quot;EN_PROCESO&quot;</span>);
+                </div>
+                <div className="pl-8">{"}"}</div>
+                <div className="pl-8">
+                  setLifecyclePhase(<span className="text-[#ce9178]">&quot;OCUPADO&quot;</span>);
+                </div>
                 <div className="pl-4">{"}"}</div>
                 <div>{" "}</div>
                 <div className="pl-4">
                   <span className="text-[#569cd6]">public void</span> pasarALibre() {"{"}
                 </div>
-                <div className="pl-8 text-slate-500">// ...</div>
+                <div className="pl-8">
+                  <span className="text-[#569cd6]">if</span> (<span className="text-[#569cd6]">this</span>.solicitudEnProcesamiento != <span className="text-[#569cd6]">null</span>) {"{"}
+                </div>
+                <div className="pl-12">
+                  <span className="text-[#569cd6]">this</span>.solicitudEnProcesamiento.setLifecyclePhase(<span className="text-[#ce9178]">&quot;FINALIZADA&quot;</span>);
+                </div>
+                <div className="pl-8">{"}"}</div>
+                <div className="pl-8">
+                  <span className="text-[#569cd6]">this</span>.estaOcupado = <span className="text-[#569cd6]">false</span>;
+                </div>
+                <div className="pl-8">
+                  <span className="text-[#569cd6]">this</span>.solicitudEnProcesamiento = <span className="text-[#569cd6]">null</span>;
+                </div>
+                <div className="pl-8">
+                  setLifecyclePhase(<span className="text-[#ce9178]">&quot;LIBRE&quot;</span>);
+                </div>
                 <div className="pl-4">{"}"}</div>
                 <div>{" "}</div>
                 <div className="pl-4">
                   <span className="text-[#569cd6]">public void</span> setEstaOcupado(<span className="text-[#569cd6]">boolean</span> estado) {"{"}
                 </div>
-                <div className="pl-8 text-slate-500">// ...</div>
+                <div className="pl-8">
+                  <span className="text-[#569cd6]">this</span>.estaOcupado = estado;
+                </div>
+                <div className="pl-8">
+                  setLifecyclePhase(estado ? <span className="text-[#ce9178]">&quot;OCUPADO&quot;</span> : <span className="text-[#ce9178]">&quot;LIBRE&quot;</span>);
+                </div>
+                <div className="pl-4">{"}"}</div>
+                <div>{" "}</div>
+                <div className="pl-4">
+                  <span className="text-[#569cd6]">public</span> <span className="text-[#4ec9b0]">Solicitud</span> getSolicitudEnProcesamiento() {"{"}
+                </div>
+                <div className="pl-8">
+                  <span className="text-[#569cd6]">return this</span>.solicitudEnProcesamiento;
+                </div>
+                <div className="pl-4">{"}"}</div>
+                <div>{" "}</div>
+                <div className="pl-4">
+                  <span className="text-[#569cd6]">@Override</span>
+                </div>
+                <div className="pl-4">
+                  <span className="text-[#569cd6]">public void</span> showState() {"{"}
+                </div>
+                <div className="pl-8">
+                  <span className="text-[#4ec9b0]">System</span>.out.println(<span className="text-[#ce9178]">&quot;Servidor ID: &quot;</span> + getId()
+                </div>
+                <div className="pl-16">
+                  + <span className="text-[#ce9178]">&quot; | Fase: &quot;</span> + getLifecyclePhase()
+                </div>
+                <div className="pl-16">
+                  + <span className="text-[#ce9178]">&quot; | Ocupado: &quot;</span> + estaOcupado
+                </div>
+                <div className="pl-16">
+                  + <span className="text-[#ce9178]">&quot; | Solicitud en proceso: &quot;</span> + (solicitudEnProcesamiento != <span className="text-[#569cd6]">null</span> ? solicitudEnProcesamiento.getClase() : <span className="text-[#ce9178]">&quot;Ninguna&quot;</span>));
+                </div>
                 <div className="pl-4">{"}"}</div>
                 <div>{"}"}</div>
               </div>
@@ -524,19 +776,9 @@ export const getExamplesData = (scrollTo: (id: string) => void) => ({
             <div className="p-4 flex gap-4 overflow-hidden leading-relaxed">
               {/* Line Numbers */}
               <div className="text-slate-600 select-none text-right flex flex-col">
-                <span>1</span>
-                <span>2</span>
-                <span>3</span>
-                <span>4</span>
-                <span>5</span>
-                <span>6</span>
-                <span>7</span>
-                <span>8</span>
-                <span>9</span>
-                <span>10</span>
-                <span>11</span>
-                <span>12</span>
-                <span>13</span>
+                {Array.from({ length: 42 }, (_, i) => (
+                  <span key={i + 1}>{i + 1}</span>
+                ))}
               </div>
 
               {/* Java Syntax Content */}
@@ -546,9 +788,16 @@ export const getExamplesData = (scrollTo: (id: string) => void) => ({
                 </div>
                 <div>{" "}</div>
                 <div>
-                  <span className="text-[#569cd6]">public class</span> <span className="text-[#4ec9b0]">Solicitud</span> {"{"}
+                  <span className="text-[#569cd6]">import</span> des.<span className="text-[#4ec9b0]">Entity</span>;
                 </div>
                 <div>{" "}</div>
+                <div>
+                  <span className="text-[#569cd6]">public class</span> <span className="text-[#4ec9b0]">Solicitud</span> <span className="text-[#569cd6]">extends</span> <span className="text-[#4ec9b0]">Entity</span> {"{"}
+                </div>
+                <div>{" "}</div>
+                <div className="pl-4">
+                  <span className="text-[#569cd6]">private static int</span> contadorSolicitudes = <span className="text-[#b5cea8]">0</span>;
+                </div>
                 <div className="pl-4">
                   <span className="text-[#569cd6]">private int</span> clase;
                 </div>
@@ -556,13 +805,72 @@ export const getExamplesData = (scrollTo: (id: string) => void) => ({
                 <div className="pl-4">
                   <span className="text-[#569cd6]">public</span> <span className="text-[#4ec9b0]">Solicitud</span>() {"{"}
                 </div>
-                <div className="pl-8 text-slate-500">// ...</div>
+                <div className="pl-8">
+                  <span className="text-[#569cd6]">this</span>(<span className="text-[#ce9178]">&quot;Solicitud-&quot;</span> + (++contadorSolicitudes), (<span className="text-[#569cd6]">int</span>) ((<span className="text-[#4ec9b0]">Math</span>.random() * <span className="text-[#b5cea8]">4</span>) + <span className="text-[#b5cea8]">1</span>));
+                </div>
+                <div className="pl-4">{"}"}</div>
+                <div>{" "}</div>
+                <div className="pl-4">
+                  <span className="text-[#569cd6]">public</span> <span className="text-[#4ec9b0]">Solicitud</span>(<span className="text-[#4ec9b0]">String</span> id) {"{"}
+                </div>
+                <div className="pl-8">
+                  <span className="text-[#569cd6]">this</span>(id, (<span className="text-[#569cd6]">int</span>) ((<span className="text-[#4ec9b0]">Math</span>.random() * <span className="text-[#b5cea8]">4</span>) + <span className="text-[#b5cea8]">1</span>));
+                </div>
+                <div className="pl-4">{"}"}</div>
+                <div>{" "}</div>
+                <div className="pl-4">
+                  <span className="text-[#569cd6]">public</span> <span className="text-[#4ec9b0]">Solicitud</span>(<span className="text-[#4ec9b0]">String</span> id, <span className="text-[#569cd6]">int</span> clase) {"{"}
+                </div>
+                <div className="pl-8">
+                  <span className="text-[#569cd6]">super</span>(id, <span className="text-[#ce9178]">&quot;ARRIBADA&quot;</span>);
+                </div>
+                <div className="pl-8">
+                  <span className="text-[#569cd6]">this</span>.clase = clase;
+                </div>
+                <div className="pl-4">{"}"}</div>
+                <div>{" "}</div>
+                <div className="pl-4">
+                  <span className="text-[#569cd6]">public</span> <span className="text-[#4ec9b0]">Solicitud</span>(<span className="text-[#4ec9b0]">String</span> id, <span className="text-[#4ec9b0]">String</span> lifecyclePhase, <span className="text-[#569cd6]">int</span> clase) {"{"}
+                </div>
+                <div className="pl-8">
+                  <span className="text-[#569cd6]">super</span>(id, lifecyclePhase);
+                </div>
+                <div className="pl-8">
+                  <span className="text-[#569cd6]">this</span>.clase = clase;
+                </div>
                 <div className="pl-4">{"}"}</div>
                 <div>{" "}</div>
                 <div className="pl-4">
                   <span className="text-[#569cd6]">public int</span> getClase() {"{"}
                 </div>
-                <div className="pl-8 text-slate-500">// ...</div>
+                <div className="pl-8">
+                  <span className="text-[#569cd6]">return this</span>.clase;
+                </div>
+                <div className="pl-4">{"}"}</div>
+                <div>{" "}</div>
+                <div className="pl-4">
+                  <span className="text-[#569cd6]">public void</span> setClase(<span className="text-[#569cd6]">int</span> clase) {"{"}
+                </div>
+                <div className="pl-8">
+                  <span className="text-[#569cd6]">this</span>.clase = clase;
+                </div>
+                <div className="pl-4">{"}"}</div>
+                <div>{" "}</div>
+                <div className="pl-4">
+                  <span className="text-[#569cd6]">@Override</span>
+                </div>
+                <div className="pl-4">
+                  <span className="text-[#569cd6]">public void</span> showState() {"{"}
+                </div>
+                <div className="pl-8">
+                  <span className="text-[#4ec9b0]">System</span>.out.println(<span className="text-[#ce9178]">&quot;Solicitud ID: &quot;</span> + getId()
+                </div>
+                <div className="pl-16">
+                  + <span className="text-[#ce9178]">&quot; | Clase: &quot;</span> + clase
+                </div>
+                <div className="pl-16">
+                  + <span className="text-[#ce9178]">&quot; | Fase: &quot;</span> + getLifecyclePhase());
+                </div>
                 <div className="pl-4">{"}"}</div>
                 <div>{"}"}</div>
               </div>
@@ -799,7 +1107,7 @@ export const getExamplesData = (scrollTo: (id: string) => void) => ({
             <div className="p-4 flex gap-4 overflow-hidden leading-relaxed">
               {/* Line Numbers */}
               <div className="text-slate-600 select-none text-right flex flex-col">
-                {Array.from({ length: 44 }, (_, i) => (
+                {Array.from({ length: 46 }, (_, i) => (
                   <span key={i + 1}>{i + 1}</span>
                 ))}
               </div>
@@ -902,6 +1210,9 @@ export const getExamplesData = (scrollTo: (id: string) => void) => ({
                 </div>
                 <div className="pl-8">{"}"}</div>
                 <div>{" "}</div>
+                <div className="pl-8">
+                  modeloActual.mostrarEstadoEntidades();
+                </div>
                 <div className="pl-4">{"}"}</div>
                 <div>{"}"}</div>
               </div>
@@ -938,7 +1249,7 @@ export const getExamplesData = (scrollTo: (id: string) => void) => ({
             <div className="p-4 flex gap-4 overflow-hidden leading-relaxed">
               {/* Line Numbers */}
               <div className="text-slate-600 select-none text-right flex flex-col">
-                {Array.from({ length: 45 }, (_, i) => (
+                {Array.from({ length: 46 }, (_, i) => (
                   <span key={i + 1}>{i + 1}</span>
                 ))}
               </div>
@@ -1016,6 +1327,10 @@ export const getExamplesData = (scrollTo: (id: string) => void) => ({
                 </div>
                 <div>{" "}</div>
                 <div className="pl-8">
+                  modeloActual.actualizarServidorDisponible();
+                </div>
+                <div>{" "}</div>
+                <div className="pl-8">
                   <span className="text-[#569cd6]">if</span> (modeloActual.haySolicitudesEnEspera()) {"{"}
                 </div>
                 <div>{" "}</div>
@@ -1036,14 +1351,11 @@ export const getExamplesData = (scrollTo: (id: string) => void) => ({
                 <div className="pl-12">
                   eventos.agregar(nuevoEvento);
                 </div>
-                <div className="pl-8">
-                  {"}"} <span className="text-[#569cd6]">else</span> {"{"}
-                </div>
-                <div className="pl-12">
-                  modeloActual.actualizarServidorDisponible();
-                </div>
                 <div className="pl-8">{"}"}</div>
                 <div>{" "}</div>
+                <div className="pl-8">
+                  modeloActual.mostrarEstadoEntidades();
+                </div>
                 <div className="pl-4">{"}"}</div>
                 <div>{"}"}</div>
               </div>
