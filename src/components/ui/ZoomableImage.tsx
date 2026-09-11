@@ -18,6 +18,9 @@ export function ZoomableImage({
   containerClassName = "",
   caption,
 }: ZoomableImageProps) {
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+  const imageSrc = src.startsWith("/") ? `${basePath}${src}` : src;
+
   const [isOpen, setIsOpen] = useState(false);
   const [scale, setScale] = useState(1);
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -165,7 +168,7 @@ export function ZoomableImage({
         }}
         aria-label={`Ampliar imagen: ${alt}`}
       >
-        <img src={src} alt={alt} className={`block ${className}`} />
+        <img src={imageSrc} alt={alt} className={`block ${className}`} />
       </div>
 
       {caption && <div className="w-full">{caption}</div>}
@@ -264,7 +267,7 @@ export function ZoomableImage({
           >
             {/* Elemento de la imagen con escala y traslación */}
             <img
-              src={src}
+              src={imageSrc}
               alt={alt}
               draggable={false}
               onDoubleClick={() => {
